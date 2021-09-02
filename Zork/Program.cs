@@ -3,25 +3,6 @@
 namespace Zork
 {
 
-    enum Commands
-    {
-        QUIT,
-        Q,
-        LOOK,
-        L,
-        NORTH,
-        N,
-        SOUTH,
-        S,
-        EAST,
-        E,
-        WEST,
-        W,
-        HELP,
-        H,
-        UNKNOWN
-    }
-
     class Program
     {
         static void Main(string[] args)
@@ -46,22 +27,13 @@ namespace Zork
 
                     case Commands.NORTH:
                     case Commands.N:
-                        outputString = "You moved NORTH.";
-                        break;
-
                     case Commands.SOUTH:
                     case Commands.S:
-                        outputString = "You moved SOUTH.";
-                        break;
-
                     case Commands.EAST:
                     case Commands.E:
-                        outputString = "You moved EAST.";
-                        break;
-
                     case Commands.WEST:
                     case Commands.W:
-                        outputString = "You moved WEST.";
+                        outputString = $"You moved {command.ToString()}.";
                         break;
 
                     case Commands.QUIT:
