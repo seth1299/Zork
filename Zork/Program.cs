@@ -46,6 +46,14 @@ namespace Zork
 
                     case Commands.NORTH:
                     case Commands.N:
+
+                    case Commands.SOUTH:
+                    case Commands.S:
+                    case Commands.EAST:
+                    case Commands.E:
+                    case Commands.WEST:
+                    case Commands.W:
+                        outputString = $"You moved {command.ToString()}.";
                         outputString = "You moved NORTH.";
                         break;
 
