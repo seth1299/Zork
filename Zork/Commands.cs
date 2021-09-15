@@ -18,6 +18,8 @@ namespace Zork
         W,
         HELP,
         H,
+        INVENTORY,
+        I,
         UNKNOWN
     }
 }
