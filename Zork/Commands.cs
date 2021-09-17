@@ -20,6 +20,9 @@ namespace Zork
         H,
         INVENTORY,
         I,
+        CLEAR,
+        C,
+        CLS,
         UNKNOWN
     }
 }
