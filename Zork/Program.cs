@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Zork
 {
@@ -14,42 +13,6 @@ namespace Zork
                 return Rooms[Location.Row, Location.Column];
             }
         }
-        private static Commands ConvertCommandShortcutToFullName(Commands command)
-        {
-            switch (command)
-            {
-                case Commands.N:
-                    return Commands.NORTH;
-
-                case Commands.S:
-                    return Commands.SOUTH;
-
-                case Commands.E:
-                    return Commands.EAST;
-
-                case Commands.W:
-                    return Commands.WEST;
-
-                case Commands.L:
-                    return Commands.LOOK;
-
-                case Commands.Q:
-                    return Commands.QUIT;
-
-                case Commands.H:
-                    return Commands.HELP;
-
-                case Commands.I:
-                    return Commands.INVENTORY;
-
-                case Commands.C:
-                case Commands.CLS:
-                    return Commands.CLEAR;
-
-                default:
-                    return command;
-            }
-        }
 
         static void Main(string[] args)
         {
@@ -57,10 +20,10 @@ namespace Zork
             InitializeRoomDescriptions();
 
             while (true)
-            { 
+            {
                 Console.Write($"\n{CurrentRoom}\n>");
 
-                Commands command = ConvertCommandShortcutToFullName(ToCommand(Console.ReadLine().Trim()));
+                Commands command = ToCommand(Console.ReadLine().Trim());
 
                 if (command == Commands.QUIT)
                 {
@@ -80,15 +43,11 @@ namespace Zork
                         Console.WriteLine("You are carrying a piece of paper with the words \"Up, up, down, down, left, right, left, right, B, A\" written on it. \nYou aren't sure what they mean.");
                         break;
 
-                    case Commands.CLEAR:
-                        Console.Clear();
-                        break;
-
                     case Commands.NORTH:
                     case Commands.SOUTH:
                     case Commands.EAST:
                     case Commands.WEST:
-                        if ( Move(command) == false )
+                        if (Move(command) == false)
                         {
                             Console.WriteLine("The way is shut!");
                         }
