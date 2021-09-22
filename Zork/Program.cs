@@ -1,63 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Zork
 {
 
     internal class Program
     {
-        private static String CurrentRoom
+        private static Room CurrentRoom
         {
             get
             {
                 return Rooms[Location.Row, Location.Column];
             }
         }
-        private static Commands ConvertCommandShortcutToFullName(Commands command)
-        {
-            switch (command)
-            {
-                case Commands.N:
-                    return Commands.NORTH;
-
-                case Commands.S:
-                    return Commands.SOUTH;
-
-                case Commands.E:
-                    return Commands.EAST;
-
-                case Commands.W:
-                    return Commands.WEST;
-
-                case Commands.L:
-                    return Commands.LOOK;
-
-                case Commands.Q:
-                    return Commands.QUIT;
-
-                case Commands.H:
-                    return Commands.HELP;
-
-                case Commands.I:
-                    return Commands.INVENTORY;
-
-                default:
-                    return command;
-            }
-        }
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Zork!\n");
+            Console.WriteLine("Welcome to Zork!");
+            InitializeRoomDescriptions();
 
             while (true)
-            { 
-                Console.Write($"{CurrentRoom}\n>");
+            {
+                Console.Write($"\n{CurrentRoom}\n>");
 
-                Commands command = ConvertCommandShortcutToFullName(ToCommand(Console.ReadLine().Trim()));
-
-                Console.WriteLine("");
+                Commands command = ToCommand(Console.ReadLine().Trim());
 
                 if (command == Commands.QUIT)
                 {
@@ -70,30 +36,31 @@ namespace Zork
                 {
 
                     case Commands.LOOK:
-                        Console.WriteLine("A rubber mat saying \"Welcome to Zork!\" lies by the door.\n");
+                        Console.WriteLine(CurrentRoom.Description);
                         break;
 
                     case Commands.INVENTORY:
-                        Console.WriteLine("You are carrying a piece of paper with the words \"Up, up, down, down, left, right, left, right, B, A\" written on it. \nYou aren't sure what they mean.\n");
+                        Console.WriteLine("You are carrying a piece of paper with the words \"Up, up, down, down, left, right, left, right, B, A\" written on it. \nYou aren't sure what they mean.");
                         break;
 
                     case Commands.NORTH:
                     case Commands.SOUTH:
                     case Commands.EAST:
                     case Commands.WEST:
-                        if ( Move(command) == false )
+                    
+                        if (Move(command) == false)
                         {
-                            Console.WriteLine("The way is shut!\n");
+                            Console.WriteLine("The way is shut!");
                         }
                         break;
 
                     case Commands.HELP:
                         Console.WriteLine("Type \"NORTH\" or \"N\" to go NORTH, \"SOUTH\" or \"S\" to go SOUTH, \"WEST\" or \"W\" to go WEST, \"EAST\" or \"E\" to go EAST, \"QUIT\" or \"Q\" to " +
-                            "quit the game, \"I\" or \"INVENTORY\" to look in your inventory, or \"L\" or \"LOOK\" to look around your current location.\n");
+                            "quit the game, \"I\" or \"INVENTORY\" to look in your inventory, \"C\", \"CLS\", or \"CLEAR\" to clear all of the messages on the Console, or \"L\" or \"LOOK\" to look around your current location.");
                         break;
 
                     default:
-                        Console.WriteLine("Unknown command.\n");
+                        Console.WriteLine("Unknown command.");
                         break;
                 }
             }
@@ -135,12 +102,27 @@ namespace Zork
 
         private static bool IsDirection(Commands command) => Directions.Contains(command);
 
-        private static readonly string[,] Rooms =
+        private static readonly Room[,] Rooms =
          {
-            {"Rocky Trail", "South of House", "Canyon View" },
-            {"Forest", "West of House", "Behind House"},
-            {"Dense Woods", "North of House", "Clearing"}
+            {new Room("Rocky Trail"), new Room("South of House"), new Room("Canyon View") },
+            {new Room("Forest"), new Room("West of House"), new Room("Behind House")},
+            {new Room("Dense Woods"), new Room("North of House"), new Room("Clearing")}
          };
+
+        private static void InitializeRoomDescriptions()
+        {
+            Rooms[0, 0].Description = "You are on a rock-strewn trail.";
+            Rooms[0, 1].Description = "You are facing the south side of a white house. There is no door here, and all the windows are barred.";
+            Rooms[0, 2].Description = "You are at the top of the Great Canyon on its south wall.";
+
+            Rooms[1, 0].Description = "This is a forest, with trees in all directions around you.";
+            Rooms[1, 1].Description = "This is an open field west of a white house, with a boarded front door.";
+            Rooms[1, 2].Description = "You are behind the white house. In one corner of the house there is a small window which is slightly ajar.";
+
+            Rooms[2, 0].Description = "This is a dimly lit forest, with large trees all around. To the east, there appears to be sunlight.";
+            Rooms[2, 1].Description = "You are facing the north side of a white house. There is no door here, and all the windows are barred.";
+            Rooms[2, 2].Description = "You are in a clearing, with a forest surrounding you on the west and south.";
+        }
 
         private static readonly List<Commands> Directions = new List<Commands>
         {
