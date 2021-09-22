@@ -47,6 +47,7 @@ namespace Zork
                     case Commands.SOUTH:
                     case Commands.EAST:
                     case Commands.WEST:
+                    
                         if (Move(command) == false)
                         {
                             Console.WriteLine("The way is shut!");
