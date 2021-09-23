@@ -27,9 +27,11 @@ namespace Zork
 
                 if (previousRoom != CurrentRoom)
                 {
-                    Console.Write(CurrentRoom.Description + "\n>");
+                    Console.Write(CurrentRoom.Description + "\n");
                     previousRoom = CurrentRoom;
                 }
+
+                Console.Write(">");
 
                 Commands command = ToCommand(Console.ReadLine().Trim());
 
@@ -47,7 +49,7 @@ namespace Zork
                         break;
 
                     case Commands.INVENTORY:
-                        Console.WriteLine("You are carrying a piece of paper with the words \"Up, up, down, down, left, right, left, right, B, A\" written on it. \nYou aren't sure what they mean.");
+                        Console.WriteLine("-You are carrying a piece of paper with the words \"Up, up, down, down, left, right, left, right, B, A\" written on it. \nYou aren't sure what they mean.");
                         break;
 
                     case Commands.NORTH:
