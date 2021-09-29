@@ -37,25 +37,21 @@ namespace Zork
 
             Room previousRoom = null;
 
-            while (true)
+            Commands command = Commands.UNKNOWN;
+
+            while (command != Commands.QUIT)
             {
                 Console.Write($"\n{CurrentRoom}\n");
 
                 if (previousRoom != CurrentRoom)
                 {
-                    Console.Write(CurrentRoom.Description + "\n");
+                    Console.WriteLine(CurrentRoom.Description);
                     previousRoom = CurrentRoom;
                 }
 
                 Console.Write(">");
 
-                Commands command = ToCommand(Console.ReadLine().Trim());
-
-                if (command == Commands.QUIT)
-                {
-                    Console.Write("Thanks for playing!\n");
-                    break;
-                }
+                command = ToCommand(Console.ReadLine().Trim());
 
                 switch (command)
                 {
@@ -63,11 +59,7 @@ namespace Zork
                     case Commands.LOOK:
                         Console.WriteLine(CurrentRoom.Description);
                         break;
-
-                    case Commands.INVENTORY:
-                        Console.WriteLine("-You are carrying a piece of paper with the words \"Up, up, down, down, left, right, left, right, B, A\" written on it. \nYou aren't sure what they mean.");
-                        break;
-
+                        
                     case Commands.NORTH:
                     case Commands.SOUTH:
                     case Commands.EAST:
@@ -79,16 +71,14 @@ namespace Zork
                         }
                         break;
 
-                    case Commands.HELP:
-                        Console.WriteLine("Type \"NORTH\" or \"N\" to go NORTH, \"SOUTH\" or \"S\" to go SOUTH, \"WEST\" or \"W\" to go WEST, \"EAST\" or \"E\" to go EAST, \"QUIT\" or \"Q\" to " +
-                            "quit the game, \"I\" or \"INVENTORY\" to look in your inventory, \"C\", \"CLS\", or \"CLEAR\" to clear all of the messages on the Console, or \"L\" or \"LOOK\" to look around your current location.");
-                        break;
-
                     default:
                         Console.WriteLine("Unknown command.");
                         break;
                 }
             }
+
+            Console.Write("\nThanks for playing!\n");
+
         }
 
         private static bool Move(Commands command)
@@ -146,7 +136,5 @@ namespace Zork
         };
 
         private static (int Row, int Column) Location = (1, 1);
-
-        private static readonly Dictionary<string, Room> RoomMap;
     }
 }
