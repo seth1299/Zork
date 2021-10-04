@@ -8,6 +8,8 @@ namespace Zork
         SOUTH,
         EAST,
         WEST,
+        HELP,
+        INVENTORY,
         UNKNOWN
     }
 }
