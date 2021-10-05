@@ -10,6 +10,8 @@ namespace Zork
         WEST,
         HELP,
         INVENTORY,
+        SCORE,
+        REWARD,
         UNKNOWN
     }
 }

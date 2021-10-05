@@ -26,7 +26,7 @@ namespace Zork
             Room previousRoom = null;
             while (IsRunning)
             {
-                Console.WriteLine(Player.Location);
+                Console.WriteLine($"\n{Player.Location}"); // This interpolated string with a New Line at the front is intentional to create more "white space" in the program. Having the lines so close to each other made me claustrophobic.
                 if (previousRoom != Player.Location)
                 {
                     Console.WriteLine(Player.Location.Description);
@@ -36,6 +36,8 @@ namespace Zork
                 Console.Write("\n> ");
                 Commands command = ToCommand(Console.ReadLine().Trim());
 
+                IncreaseMoves(command);
+
                 switch (command)
                 {
                     case Commands.QUIT:
@@ -44,6 +46,25 @@ namespace Zork
 
                     case Commands.LOOK:
                         Console.WriteLine(Player.Location.Description);
+                        break;
+
+                    case Commands.SCORE:
+                        switch (Player.Moves) // There's probably a significantly more efficient way to do this one-time grammar check, but this was the most efficient way I could think of.
+                        {                     // I would just like to not lose any points for inefficient code I made while trying to work ahead and solve problems ahead of time please.
+                            case 1:
+                            Console.WriteLine($"Your score is {Player.Score} in {Player.Moves} move.");
+                            break;
+
+                            default:
+                            Console.WriteLine($"Your score is {Player.Score} in {Player.Moves} moves.");
+                            break;
+                        }
+                        
+                        break;
+
+                    case Commands.REWARD:
+                        Console.WriteLine("Score increased by 1.");
+                        Player.Score++;
                         break;
 
                     case Commands.NORTH:
@@ -61,6 +82,19 @@ namespace Zork
                         Console.WriteLine("Unknown command.");
                         break;
                 }
+            }
+        }
+
+        private void IncreaseMoves(Commands command)
+        {
+            switch(command)
+            {
+                case Commands.UNKNOWN:
+                    break;
+
+                default:
+                    Player.Moves++;
+                    break;
             }
         }
 
